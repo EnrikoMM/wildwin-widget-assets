@@ -403,7 +403,9 @@
   /* .wwc prefix: must outrank `.wwc img { display: block }` */
   .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn,
   .wwc .wwc__coin--1, .wwc .wwc__coin--2, .wwc .wwc__coin--3, .wwc .wwc__coin--5, .wwc .wwc__coin--6 { display: none; }
-  .wwc__stage { padding-right: var(--edge); }
+  /* wheel unit | jackpot (takes the rest, centred) | chest pile: the space is
+     shared evenly, so the pile never meets the jackpot or the rounded edge */
+  .wwc__stage { padding-right: var(--edge); grid-template-columns: var(--unit-w) minmax(0, 1fr) var(--pile-w); }
   .wwc__wing--l { width: 34%; }
   .wwc__pool { width: calc(var(--mq-w) + 24px); }
 
@@ -448,6 +450,14 @@
   .wwc .wwc__chest--bronze, .wwc .wwc__turn { display: none; }
   .wwc__chest--gold { left: 0; }
   .wwc__coin--4 { left: -4px; }
+}
+
+/* Phone sizes between the two blocks above: jackpot sized to the room there is. */
+@container wwc (min-width: 310px) and (max-width: 356px) {
+  .wwc__body { --mq-w: 116px; --jp-w: 116px; --plate-w: 86px; --chest-gold: 32px; --chest-side: 24px; }
+}
+@container wwc (min-width: 380px) and (max-width: 759px) {
+  .wwc__body { --mq-w: 148px; --jp-w: 148px; --plate-w: 96px; --jp-top: 22px; }
 }
 
 /* Reduced motion: no movement at all; opacity fades stay
