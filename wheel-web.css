@@ -269,7 +269,6 @@
 /* ------------------------------------------------- hover (pointer devices) */
 @media (hover: hover) {
   .wwc:hover .wwc__body { border-color: rgba(2, 240, 152, .5); }
-  .wwc:hover .wwc__tease { animation: wwc-tease .9s var(--wwc-ease-out); }
   .wwc:hover .wwc__cta { transform: translateY(-1px); }
   .wwc:hover .wwc__cta::before, .wwc:hover .wwc__cta::after, .wwc:hover .wwc__track::after { opacity: 1; }
   .wwc:hover .wwc__arrow { animation: wwc-chase .9s ease-in-out 1; }
@@ -279,11 +278,9 @@
   .wwc:hover .wwc__lift { transform: translateY(-2px); }
 }
 /* keyboard focus gets the same moment on every device */
-.wwc:focus-visible .wwc__tease { animation: wwc-tease .9s var(--wwc-ease-out); }
 .wwc:focus-visible .wwc__cta::before, .wwc:focus-visible .wwc__cta::after, .wwc:focus-visible .wwc__track::after { opacity: 1; }
 
-/* ------------------------------------------------- intro: tease once */
-.is-intro .wwc__tease { animation: wwc-intro .9s var(--wwc-ease-out) .6s; }
+/* The wheel itself only moves when the player taps/clicks (no hover or intro wobble). */
 
 /* ------------------------------------------------- click
    Each state selector is written for the class on an ancestor AND on the
