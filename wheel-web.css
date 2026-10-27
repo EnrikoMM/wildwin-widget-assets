@@ -33,7 +33,7 @@
 }
 .wwc *, .wwc *::before, .wwc *::after { box-sizing: border-box; }
 .wwc:focus { outline: none; }
-.wwc:focus-visible { outline: 3px solid var(--wwc-focus); outline-offset: 3px; }
+.wwc:focus-visible { outline: 3px solid var(--wwc-focus); outline-offset: -3px; } /* inside the card: the lobby clips anything outside */
 .wwc img { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 
 /* ---------------------------------------------------------------- the card */
@@ -154,8 +154,9 @@
   opacity: 0; transition: opacity .25s var(--wwc-ease-out);
 }
 .wwc__label { position: relative; display: block; }
-.wwc__turn { position: relative; display: block; flex: 0 0 auto; width: 16px; height: 16px; transition: transform .5s var(--wwc-ease-out); }
 .wwc__turn {
+  position: relative; display: block; flex: 0 0 auto; width: 16px; height: 16px;
+  transition: transform .5s var(--wwc-ease-out);
   background: currentColor;
   -webkit-mask: url(wheel-web-turn.svg) center / contain no-repeat;
           mask: url(wheel-web-turn.svg) center / contain no-repeat;
@@ -307,36 +308,36 @@
 .wwc:focus-visible .wwc__lit { opacity: .4; }
 
 /* ------------------------------------------------- tap
-   Selectors carry the class on an ancestor AND on the card itself.
+   The state classes sit on the card's root (an ancestor).
    While spinning, hover lighting is off: only the passing light shows. */
-.is-spinning .wwc .wwc__body, .wwc.is-spinning .wwc__body { border-color: rgba(255, 255, 255, .16); }
-.is-spinning .wwc .wwc__cta::before, .wwc.is-spinning .wwc__cta::before { opacity: 1; }
-.is-spinning .wwc .wwc__bay .wwc__lit, .wwc.is-spinning .wwc__bay .wwc__lit,
-.is-spinning .wwc .wwc__rail::after, .wwc.is-spinning .wwc__rail::after,
-.is-spinning .wwc .wwc__sill::after, .wwc.is-spinning .wwc__sill::after { opacity: 0; transition: none; }
+.is-spinning .wwc .wwc__body { border-color: rgba(255, 255, 255, .16); }
+.is-spinning .wwc .wwc__cta::before { opacity: 1; }
+.is-spinning .wwc .wwc__bay .wwc__lit,
+.is-spinning .wwc .wwc__rail::after,
+.is-spinning .wwc .wwc__sill::after { opacity: 0; transition: none; }
 
 /* wind-up handshake: all three keys draw up together, then settle */
-.is-windup .wwc .wwc__cta, .wwc.is-windup .wwc__cta { transform: scale(.96); transition-duration: .16s; }
-.is-windup .wwc .wwc__key, .wwc.is-windup .wwc__key { transform: translateY(calc(-2 * var(--bu))); transition: transform .16s var(--wwc-ease-in); }
+.is-windup .wwc .wwc__cta { transform: scale(.96); transition-duration: .16s; }
+.is-windup .wwc .wwc__key { transform: translateY(calc(-2 * var(--bu))); transition: transform .16s var(--wwc-ease-in); }
 
 /* the path lights as the wheel turns: rail, bronze, silver, gold. Each is a
    passing light (0 -> 1 -> 0), so nothing reads as unlocked or stays lit. */
-.is-lit-t .wwc .wwc__rail--a::after, .wwc.is-lit-t .wwc__rail--a::after { animation: wwc-pass .36s var(--wwc-ease-out); }
-.is-lit-t .wwc .wwc__rail--b::after, .wwc.is-lit-t .wwc__rail--b::after { animation: wwc-pass .36s var(--wwc-ease-out) 70ms both; }
-.is-lit-b .wwc .wwc__sill::after, .wwc.is-lit-b .wwc__sill::after { animation: wwc-pass .9s var(--wwc-ease-out); }
-.is-lit-b .wwc .wwc__bay--bronze .wwc__lit, .wwc.is-lit-b .wwc__bay--bronze .wwc__lit,
-.is-lit-s .wwc .wwc__bay--silver .wwc__lit, .wwc.is-lit-s .wwc__bay--silver .wwc__lit,
-.is-lit-g .wwc .wwc__bay--gold   .wwc__lit, .wwc.is-lit-g .wwc__bay--gold   .wwc__lit { animation: wwc-pass .42s var(--wwc-ease-out); }
-.is-lit-b .wwc .wwc__bay--bronze .wwc__lid, .wwc.is-lit-b .wwc__bay--bronze .wwc__lid,
-.is-lit-s .wwc .wwc__bay--silver .wwc__lid, .wwc.is-lit-s .wwc__bay--silver .wwc__lid,
-.is-lit-g .wwc .wwc__bay--gold   .wwc__lid, .wwc.is-lit-g .wwc__bay--gold   .wwc__lid { animation: wwc-seam .3s var(--wwc-ease-out) .1s both; }
+.is-lit-t .wwc .wwc__rail--a::after { animation: wwc-pass .36s var(--wwc-ease-out); }
+.is-lit-t .wwc .wwc__rail--b::after { animation: wwc-pass .36s var(--wwc-ease-out) 70ms both; }
+.is-lit-b .wwc .wwc__sill::after { animation: wwc-pass .9s var(--wwc-ease-out); }
+.is-lit-b .wwc .wwc__bay--bronze .wwc__lit,
+.is-lit-s .wwc .wwc__bay--silver .wwc__lit,
+.is-lit-g .wwc .wwc__bay--gold   .wwc__lit { animation: wwc-pass .42s var(--wwc-ease-out); }
+.is-lit-b .wwc .wwc__bay--bronze .wwc__lid,
+.is-lit-s .wwc .wwc__bay--silver .wwc__lid,
+.is-lit-g .wwc .wwc__bay--gold   .wwc__lid { animation: wwc-seam .3s var(--wwc-ease-out) .1s both; }
 
-/* ------------------------------------------------- idle: ONE glint every 9 s,
-   wheel rim -> gold key -> gold chest. Runs only while the card is visible. */
-.is-visible .wwc__wheel .wwc__glint::before                 { animation: wwc-glint 9s var(--wwc-ease-out) 1.6s infinite; }
-.is-visible .wwc__bay--gold .wwc__key .wwc__glint::before   { animation: wwc-glint 9s var(--wwc-ease-out) 2.05s infinite; }
-.is-visible .wwc__bay--gold .wwc__chest .wwc__glint::before { animation: wwc-glint 9s var(--wwc-ease-out) 2.4s infinite; }
-.is-spinning .wwc .wwc__glint, .wwc.is-spinning .wwc__glint { opacity: 0; }
+/* ------------------------------------------------- idle: ONE glint, wheel rim ->
+   gold key -> gold chest, each time the card comes into view (never looped). */
+.is-visible .wwc__wheel .wwc__glint::before                 { animation: wwc-glint 9s var(--wwc-ease-out) 1.6s 1 both; }
+.is-visible .wwc__bay--gold .wwc__key .wwc__glint::before   { animation: wwc-glint 9s var(--wwc-ease-out) 2.05s 1 both; }
+.is-visible .wwc__bay--gold .wwc__chest .wwc__glint::before { animation: wwc-glint 9s var(--wwc-ease-out) 2.4s 1 both; }
+.is-spinning .wwc .wwc__glint { opacity: 0; }
 
 @keyframes wwc-tick  { 0% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
 @keyframes wwc-glint { 0% { transform: translateX(-120%); opacity: 0; } 1% { opacity: 1; } 7% { transform: translateX(220%); opacity: 1; } 7.5%, 100% { transform: translateX(220%); opacity: 0; } }
@@ -426,6 +427,13 @@
   .wwc .wwc__cta, .wwc .wwc__turn, .wwc .wwc__key { transition-property: opacity; }
   .wwc .wwc__cta, .wwc .wwc__turn, .wwc .wwc__key,
   .wwc:hover .wwc__cta, .wwc:hover .wwc__turn,
-  .wwc:active .wwc__cta, .is-windup .wwc .wwc__cta, .wwc.is-windup .wwc__cta,
-  .is-windup .wwc .wwc__key, .wwc.is-windup .wwc__key { transform: none; }
+  .wwc:active .wwc__cta, .is-windup .wwc .wwc__cta,
+  .is-windup .wwc .wwc__key { transform: none; }
+}
+
+/* Forced colors (Windows High Contrast): keep Spin's outline and icon. */
+@media (forced-colors: active) {
+  .wwc__cta { border: 2px solid ButtonText; }
+  .wwc__turn { forced-color-adjust: none; background: ButtonText; }
+  .wwc__sky, .wwc__wing { display: none; }
 }
