@@ -385,6 +385,9 @@
   .wwc__body {
     --card-h: 86px; --card-r: 12px;
     --edge: 9px; --gap: 5px;     /* same inset on both sides: nothing touches the rounded edge */
+    /* One phone design, drawn at 358 x 86 and scaled as a whole to the slot
+       (the script sets --wwc-s = card width / 358 and the card's height). */
+    width: 358px; transform: scale(var(--wwc-s, 1)); transform-origin: 0 0;
     --wheel: 62px;
     --unit-w: 120px;            /* wheel 62 + 58 of pill beyond it */
     --mq-w: 132px;
@@ -432,32 +435,6 @@
   .wwc:active .wwc__body { border-color: rgba(2, 240, 152, .5); }
   .wwc:active .wwc__cta { transform: scale(.96); transition-duration: .12s; }
   .wwc:active .wwc__cta::before { opacity: 1; }
-}
-
-/* ------------------------------------------------- small phone: < 330px (288)
-   Gold + silver only (bronze dropped), still overlapping; no turn icon. */
-@container wwc (max-width: 330px) {
-  .wwc__body {
-    --edge: 8px; --gap: 5px;
-    --wheel: 58px; --unit-w: 110px;
-    --mq-w: 104px;
-    --plate-w: 84px;  --plate-top: 7px;
-    --jp-w: 104px;    --jp-top: 28px;
-    --chest-gold: 28px; --chest-side: 20px; --gold-b: 22px; --side-b: 32px;
-    --tuck: .5;
-    --pile-w: calc(var(--gold-w) + var(--silver-w) * (1 - var(--tuck)));
-  }
-  .wwc .wwc__chest--bronze, .wwc .wwc__turn { display: none; }
-  .wwc__chest--gold { left: 0; }
-  .wwc__coin--4 { left: -4px; }
-}
-
-/* Phone sizes between the two blocks above: jackpot sized to the room there is. */
-@container wwc (min-width: 310px) and (max-width: 356px) {
-  .wwc__body { --mq-w: 116px; --jp-w: 116px; --plate-w: 86px; --chest-gold: 32px; --chest-side: 24px; }
-}
-@container wwc (min-width: 380px) and (max-width: 759px) {
-  .wwc__body { --mq-w: 140px; --jp-w: 140px; --plate-w: 92px; --jp-top: 21px; }
 }
 
 /* Reduced motion: no movement at all; opacity fades stay
