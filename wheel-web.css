@@ -50,7 +50,7 @@
   --bay-gap: 6px; --bay-b: 9px;
   --bay-w: 124; --bay-h: 72; --gold-k: 1.22;
   --bays-w: calc(var(--bay-w) * (2 + var(--gold-k)) * var(--bk) + 2 * var(--bay-gap));
-  --wynn-w: 116px; --wynn-gap: 2px;
+  --wynn-w: 94px; --wynn-gap: 2px;
   --vault-w: calc(var(--bays-w) + var(--wynn-gap) + var(--wynn-w));
   --rail-b: 4px;                   /* the sill / rail line, from the card's bottom */
 
@@ -287,7 +287,7 @@
 .wwc__wynn {
   position: absolute; z-index: 0; display: block;
   left: calc(var(--bays-w) + var(--wynn-gap)); bottom: 0;
-  width: var(--wynn-w); height: calc(var(--wynn-w) * 280 / 340);
+  width: var(--wynn-w); height: calc(var(--wynn-w) * 280 / 274);
   background: url(wheel-web-wynn.webp) center / 100% 100% no-repeat;
   filter: drop-shadow(-2px 4px 6px rgba(3, 8, 28, .5));
 }
@@ -352,7 +352,7 @@
     --wheel: 72px; --cta-w: 128px; --cta-h: 42px; --cta-fs: 16px;
     --mq-w: 190px; --plate-w: 98px; --plate-top: 4px; --jp-w: 156px; --jp-top: 29px;
     --bk: .7px; --bay-gap: 5px;
-    --wynn-w: 89px;
+    --wynn-w: 72px;
   }
   .wwc__cta { gap: 6px; }
   .wwc__turn { width: 14px; height: 14px; }
