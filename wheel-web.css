@@ -457,7 +457,7 @@
   .wwc__body { --mq-w: 116px; --jp-w: 116px; --plate-w: 86px; --chest-gold: 32px; --chest-side: 24px; }
 }
 @container wwc (min-width: 380px) and (max-width: 759px) {
-  .wwc__body { --mq-w: 148px; --jp-w: 148px; --plate-w: 96px; --jp-top: 22px; }
+  .wwc__body { --mq-w: 140px; --jp-w: 140px; --plate-w: 92px; --jp-top: 21px; }
 }
 
 /* Reduced motion: no movement at all; opacity fades stay
