@@ -386,26 +386,26 @@
        (the script sets --wwc-s = card width / 358 and the card's height). */
     width: 358px; transform: scale(var(--wwc-s, 1)); transform-origin: 0 0;
     --wheel: 62px;
-    --unit-w: 120px;            /* wheel 62 + 58 of pill beyond it */
-    --mq-w: 132px;
+    --unit-w: 104px;            /* wheel 62 + 42 of pill beyond it ("Spin", no icon) */
+    --mq-w: 120px;
     --cta-h: 38px; --cta-fs: 15px;
-    --plate-w: 88px;  --plate-top: 3px;
-    --jp-w: 132px;    --jp-top: 23px;
+    --plate-w: 86px;  --plate-top: 7px;
+    --jp-w: 120px;    --jp-top: 27px;   /* plate + jackpot sit on the card's middle line */
     --chest-gold: 36px;         /* small: the jackpot is the hero */
     --chest-side: 28px; --gold-b: 20px; --side-b: 30px;
     --wynn-w: 0px; --wynn-r: 0px; --paw-gap: 4px;
-    --tuck: .45;
+    --tuck: .25;                /* spread a little so both sides are the same width */
     --bronze-w: calc(var(--chest-side) * 202 / 180);
     --silver-w: calc(var(--chest-side) * 217 / 180);
     --gold-w:   calc(var(--chest-gold) * 206 / 180);
     --pile-w: calc(var(--bronze-w) * (1 - var(--tuck)) + var(--gold-w) + var(--silver-w) * (1 - var(--tuck)));
   }
   /* .wwc prefix: must outrank `.wwc img { display: block }` */
-  .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn,
+  .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn, .wwc .wwc__turn,
   .wwc .wwc__coin--1, .wwc .wwc__coin--2, .wwc .wwc__coin--3, .wwc .wwc__coin--5, .wwc .wwc__coin--6 { display: none; }
-  /* wheel unit | jackpot (takes the rest, centred) | chest pile: the space is
-     shared evenly, so the pile never meets the jackpot or the rounded edge */
-  .wwc__stage { padding-right: var(--edge); grid-template-columns: var(--unit-w) minmax(0, 1fr) var(--pile-w); }
+  /* wheel unit | jackpot | chest pile: both side columns are the same width,
+     so the jackpot sits exactly on the card's centre line */
+  .wwc__stage { padding-right: var(--edge); grid-template-columns: var(--unit-w) minmax(0, 1fr) var(--unit-w); }
   .wwc__wing--l { width: 34%; }
   .wwc__pool { width: calc(var(--mq-w) + 24px); }
 
