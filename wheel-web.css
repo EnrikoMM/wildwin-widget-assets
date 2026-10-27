@@ -1,0 +1,337 @@
+/* WildWin Lucky Wheel: web card ("Jackpot marquee + keys & chests", STEP-69).
+   Loaded by the CMS script from the same folder as the images, so image links
+   here are relative to this file. State classes (.is-visible, .is-intro,
+   .is-windup, .is-spinning, .is-won) sit on an ancestor of the card. */
+/* STEP-70b · Direction G — "Wheel unit + chest info" (polish pass 2)
+   Three columns: [ wheel · Wynn · Spin ] [ FORTUNE WHEEL / $50,000 JACKPOT ]
+   [ Win keys · Open chests for prizes · chests ]. The side columns are equal
+   (1fr each), so the jackpot sits on the card's centre line. Groups hug the
+   jackpot with the same fixed gap; spare room goes inside the groups
+   (Wynn->Spin, filled by the track's arrows; text->chests). */
+.wwc {
+  --wwc-ink: #03081C;
+  --wwc-surface: #171831;
+  --wwc-line: #202241;
+  --wwc-mint: #02F098;
+  --wwc-gold: #FDCD25;
+  --wwc-white: #FFFFFF;
+  --wwc-soft: #CBCCDC;
+  --wwc-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --wwc-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --card-h: 106px;
+  --card-r: 14px;
+  --edge: 20px;
+  --mq-w: 224px;                /* centre column */
+  --gap-l: 26px;                /* Spin track end -> jackpot column */
+  --gap-r: 20px;                /* jackpot column -> "Win keys" */
+  /* left unit */
+  --wheel: 84px;
+  --wynn-x: 60px;               /* open paw lands on the wheel rim */
+  --wynn-w: 110px;
+  --wynn-drop: 17px;            /* how far Wynn is cropped by the bottom */
+  --cta-w: 144px;
+  --cta-h: 46px;
+  /* chests: height drives size, widths follow the art */
+  --chest-gold: 76px;
+  --chest-side: 60px;
+  --chest-overlap: -12px;
+  --key: 20px;
+
+  position: relative; display: block; box-sizing: border-box;
+  width: 100%; height: var(--card-h);
+  border-radius: var(--card-r); border: 1px solid var(--wwc-line);
+  background: var(--wwc-surface);
+  overflow: hidden; isolation: isolate;
+  container: wwc / inline-size;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--wwc-white); text-decoration: none; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .3s var(--wwc-ease-out);
+}
+.wwc *, .wwc *::before, .wwc *::after { box-sizing: border-box; }
+.wwc:focus { outline: none; }
+.wwc:focus-visible { outline: 3px solid var(--wwc-mint); outline-offset: 3px; }
+.wwc:hover, .wwc:focus-visible, .wwc.is-spinning, .is-spinning .wwc { border-color: rgba(2, 240, 152, .5); }
+.wwc img { position: absolute; display: block; max-width: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+
+/* Layer 1 — one cosmic stage: faint full-width nebula + two wings. */
+.wwc__sky, .wwc__wing {
+  position: absolute; top: 0; bottom: 0; z-index: 0;
+  background-image: url(wheel-web-sky.webp);
+  background-size: auto var(--card-h);
+  background-repeat: no-repeat;
+}
+.wwc__sky {
+  left: 0; right: 0; background-position: 50% 0; opacity: .3;
+  filter: blur(7px) saturate(1.2); transform: scale(1.12);
+}
+.wwc__wing { width: 22%; opacity: .7; filter: blur(1.5px); }
+.wwc__wing--l {
+  left: 0; background-position: -130px 0; transform: scale(1.06); transform-origin: 0 50%;
+  -webkit-mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, .55) 60%, transparent 100%);
+          mask-image: linear-gradient(90deg, #000 20%, rgba(0, 0, 0, .55) 60%, transparent 100%);
+}
+.wwc__wing--r {
+  right: 0; background-position: -700px 0; transform: scale(1.06); transform-origin: 100% 50%;
+  -webkit-mask-image: linear-gradient(270deg, rgba(0, 0, 0, .35) 0%, #000 22%, rgba(0, 0, 0, .55) 60%, transparent 100%);
+          mask-image: linear-gradient(270deg, rgba(0, 0, 0, .35) 0%, #000 22%, rgba(0, 0, 0, .55) 60%, transparent 100%);
+}
+.wwc__shade {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(23, 24, 49, .15) 0%, rgba(23, 24, 49, 0) 40%, rgba(3, 8, 28, .4) 100%);
+}
+
+/* The stage: equal side columns, so the centre column is the card centre. */
+.wwc__stage {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; grid-template-columns: minmax(0, 1fr) var(--mq-w) minmax(0, 1fr);
+  padding: 0 var(--edge);
+}
+.wwc__group { position: relative; display: block; height: 100%; min-width: 0; }
+
+/* ======================================================= 1. LEFT: wheel unit
+   Wheel at the left edge; Spin hugs the jackpot column; one mint track runs
+   from the wheel's hub to past Spin, with arrows pointing back at the wheel. */
+.wwc__track {
+  position: absolute; z-index: 0;
+  left: calc(var(--wheel) / 2); right: var(--gap-l); top: calc(50% - 31px); height: 62px;
+  border-radius: 999px;
+  background:
+    radial-gradient(60px 40px at 0% 50%, rgba(2, 240, 152, .22), transparent 100%),
+    linear-gradient(90deg, rgba(2, 240, 152, .16), rgba(2, 240, 152, .05) 45%, rgba(2, 240, 152, .12));
+  box-shadow: inset 0 0 0 1px rgba(2, 240, 152, .22);
+}
+.wwc__track::after {            /* hover: the track lights up (opacity only) */
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(2, 240, 152, .6), 0 0 18px rgba(2, 240, 152, .25);
+  background: linear-gradient(90deg, rgba(2, 240, 152, .14), rgba(2, 240, 152, .03) 50%, rgba(2, 240, 152, .12));
+  opacity: 0; transition: opacity .3s var(--wwc-ease-out);
+}
+.wwc__arrows {                  /* "Spin turns the wheel": three chevrons toward it */
+  position: absolute; z-index: 1; top: calc(50% - 5px); height: 10px;
+  right: calc(var(--gap-l) + 6px + var(--cta-w) + 9px);
+  display: flex; gap: 4px;
+}
+.wwc__arrow {
+  display: block; width: 10px; height: 10px; position: relative;
+}
+.wwc__arrow::before {
+  content: ""; position: absolute; left: 3px; top: 1.5px; width: 7px; height: 7px;
+  border-left: 2px solid var(--wwc-mint); border-bottom: 2px solid var(--wwc-mint);
+  border-radius: 1px; transform: rotate(45deg);
+}
+.wwc__arrow:nth-child(1) { opacity: .85; }
+.wwc__arrow:nth-child(2) { opacity: .55; }
+.wwc__arrow:nth-child(3) { opacity: .3; }
+.wwc__glow {
+  position: absolute; z-index: 1; left: -22px; top: calc(50% - 64px);
+  width: 128px; height: 128px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(2, 240, 152, .40), rgba(2, 240, 152, .11) 62%, transparent);
+}
+.wwc__clover { z-index: 2; width: 32px; height: auto; left: -12px; bottom: 2px; transform: rotate(-18deg); }
+.wwc__wheel {
+  position: absolute; z-index: 3; left: 0; top: calc(50% - var(--wheel) / 2);
+  width: var(--wheel); height: var(--wheel);
+}
+.wwc__tease, .wwc__spin { position: absolute; inset: 0; }
+.is-spinning .wwc__spin { will-change: transform; }
+.wwc__spin img, .wwc__rim { inset: 0; width: 100%; height: 100%; }
+.wwc__rim { filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .5)); }
+.wwc__pointer {
+  left: 38.72%; top: -4%; width: 22.49%; height: auto; z-index: 2;
+  transform-origin: 50% 14%; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .5));
+}
+.wwc__pointer.is-tick { animation: wwc-tick 90ms var(--wwc-ease-out); }
+.wwc__play { left: 36%; top: 36%; width: 28%; height: 28%; z-index: 2; }
+
+/* Wynn faces left, open paw on the wheel's lower-right rim, cropped by the
+   card bottom. Ears stay >= 6 px below the top edge during the 3 px lift. */
+.wwc__wynn {
+  z-index: 4; width: var(--wynn-w); height: auto;
+  left: var(--wynn-x); bottom: calc(var(--wynn-drop) * -1);
+  transform-origin: 40% 100%;
+  transition: transform .45s var(--wwc-ease-out);
+  filter: drop-shadow(0 6px 10px rgba(3, 8, 28, .55));
+}
+
+/* Spin pill, at the jackpot end of the track. */
+.wwc__cta {
+  position: absolute; z-index: 5; right: calc(var(--gap-l) + 6px); top: calc(50% - var(--cta-h) / 2);
+  width: var(--cta-w); height: var(--cta-h); border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--wwc-mint); color: var(--wwc-ink);
+  font-size: 17px; line-height: 1; font-weight: 700; letter-spacing: .01em;
+  box-shadow: 0 4px 12px rgba(2, 240, 152, .22);
+  transition: transform .25s var(--wwc-ease-out);
+}
+.wwc__cta::before {             /* brighten layer */
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .35), rgba(255, 255, 255, .08));
+  opacity: 0; transition: opacity .25s var(--wwc-ease-out);
+}
+.wwc__cta::after {              /* stronger glow, hover/focus only */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  box-shadow: 0 0 0 1px rgba(2, 240, 152, .35), 0 6px 24px 4px rgba(2, 240, 152, .45);
+  opacity: 0; transition: opacity .25s var(--wwc-ease-out);
+}
+.wwc__label { position: relative; display: block; }
+.wwc__turn {
+  position: relative; display: block; width: 16px; height: 16px;
+  background: currentColor;
+  -webkit-mask: url(wheel-web-turn.svg) center / contain no-repeat;
+          mask: url(wheel-web-turn.svg) center / contain no-repeat;
+  transition: transform .5s var(--wwc-ease-out);
+}
+
+/* ======================================================= 2. CENTRE: marquee */
+.wwc__pool {                    /* navy pool so the type stays readable */
+  position: absolute; left: 50%; top: 58%; width: 270px; height: 110px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(23, 24, 49, .82), rgba(23, 24, 49, .4) 60%, transparent);
+}
+.wwc__plate { z-index: 2; width: 116px; height: 29px; left: calc(50% - 58px); top: 3px; }
+.wwc__glowjp {
+  position: absolute; left: 50%; top: 66px; width: 230px; height: 90px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(2, 240, 152, .22), rgba(253, 205, 37, .08) 55%, transparent);
+  opacity: .55;
+}
+.wwc__jp { position: absolute; z-index: 2; left: calc(50% - 81.5px); top: 31px; width: 163px; height: 70px; }
+.wwc__jp img { inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 4px 10px rgba(3, 8, 28, .6)); }
+.wwc__sheen {
+  position: absolute; inset: 0; overflow: hidden;
+  -webkit-mask: url(wheel-web-jackpot.webp) center / 100% 100% no-repeat;
+          mask: url(wheel-web-jackpot.webp) center / 100% 100% no-repeat;
+}
+.wwc__sheen::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 45%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 232, 150, 0) 25%, rgba(255, 244, 200, .9) 50%, rgba(255, 232, 150, 0) 75%, transparent 100%);
+  transform: translateX(-110%);
+}
+.wwc__coin { z-index: 1; }
+.wwc__coin--1 { width: 20px; left: 0; top: 62px; }
+.wwc__coin--2 { width: 26px; right: 0; top: 44px; }
+.wwc__coin--3 { width: 17px; left: 14px; top: 6px; }
+
+/* ======================================================= 3. RIGHT: keys + chests
+   Text hugs the jackpot column, chests hug the card's right edge. */
+.wwc__loot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-left: var(--gap-r); }
+.wwc__info { display: flex; flex-direction: column; gap: 5px; white-space: nowrap; }
+.wwc__keysline { display: flex; align-items: center; gap: 7px; font-size: 16px; line-height: 20px; font-weight: 700; color: var(--wwc-white); }
+.wwc__keys { display: flex; align-items: center; gap: 2px; }
+.wwc__key {
+  display: block; width: var(--key); height: var(--key);
+  background: center / contain no-repeat;
+  filter: drop-shadow(0 1px 1px rgba(3, 8, 28, .6));
+}
+.wwc__key--bronze { background-image: url(wheel-web-key-bronze.svg); }
+.wwc__key--silver { background-image: url(wheel-web-key-silver.svg); }
+.wwc__key--gold   { background-image: url(wheel-web-key-gold.svg); }
+.wwc__sub { font-size: 14px; line-height: 17px; font-weight: 500; color: var(--wwc-soft); }
+
+.wwc__chests { position: relative; align-self: flex-end; margin-bottom: 5px; display: flex; align-items: flex-end; flex: 0 0 auto; }
+.wwc__floor {                   /* mint floor glow under the three chests */
+  position: absolute; left: 0; right: 0; bottom: -10px; height: 28px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(2, 240, 152, .30), rgba(2, 240, 152, .08) 60%, transparent);
+}
+.wwc__floor::after {
+  content: ""; position: absolute; left: 10%; right: 10%; top: 9px; height: 10px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, .5), transparent);
+}
+.wwc__chest { position: relative; display: block; flex: 0 0 auto; transform-origin: 50% 100%; }
+.wwc__chest img { position: static; width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(3, 8, 28, .55)); }
+.wwc__chest--bronze { height: var(--chest-side); width: calc(var(--chest-side) * 202 / 180); z-index: 1; }
+.wwc__chest--gold   { height: var(--chest-gold); width: calc(var(--chest-gold) * 206 / 180); z-index: 2; margin: 0 var(--chest-overlap); }
+.wwc__chest--silver { height: var(--chest-side); width: calc(var(--chest-side) * 217 / 180); z-index: 1; }
+.wwc__chest--gold img { filter: drop-shadow(0 4px 6px rgba(3, 8, 28, .55)) drop-shadow(0 0 10px rgba(253, 205, 37, .22)); }
+.wwc__lid {                     /* glow along the lid seam (opacity + scale) */
+  position: absolute; left: 4%; right: 4%; top: 36%; height: 26%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(170, 255, 220, .95), rgba(2, 240, 152, .45) 45%, transparent);
+  mix-blend-mode: screen; opacity: 0; transform: scaleX(.7);
+}
+.wwc__chest--gold .wwc__lid {
+  background: radial-gradient(closest-side, rgba(255, 246, 200, .95), rgba(253, 205, 37, .5) 40%, rgba(2, 240, 152, .25) 65%, transparent);
+}
+
+/* ------------------------------------------------- hover / focus: one moment */
+.wwc:hover .wwc__tease, .wwc:focus-visible .wwc__tease { animation: wwc-tease .9s var(--wwc-ease-out); }
+.wwc:hover .wwc__cta, .wwc:focus-visible .wwc__cta { transform: translateY(-1px); }
+.wwc:hover .wwc__cta::before, .wwc:focus-visible .wwc__cta::before,
+.wwc:hover .wwc__cta::after,  .wwc:focus-visible .wwc__cta::after,
+.wwc:hover .wwc__track::after, .wwc:focus-visible .wwc__track::after { opacity: 1; }
+.wwc:hover .wwc__arrow, .wwc:focus-visible .wwc__arrow { animation: wwc-chase .9s ease-in-out 1; }
+.wwc:hover .wwc__arrow:nth-child(2), .wwc:focus-visible .wwc__arrow:nth-child(2) { animation-delay: .12s; }
+.wwc:hover .wwc__arrow:nth-child(1), .wwc:focus-visible .wwc__arrow:nth-child(1) { animation-delay: .24s; }
+.wwc:hover .wwc__turn, .wwc:focus-visible .wwc__turn { transform: rotate(-60deg); }
+.wwc:hover .wwc__wynn, .wwc:focus-visible .wwc__wynn { transform: translateY(-3px); transition-delay: 60ms; }
+
+/* ------------------------------------------------- intro: tease once */
+.is-intro .wwc__tease { animation: wwc-intro .9s var(--wwc-ease-out) .6s; }
+
+/* ------------------------------------------------- click
+   Each state selector is written for the class on an ancestor AND on the
+   card itself, at the same weight as the hover rules above, so it wins. */
+.is-windup .wwc .wwc__cta, .wwc.is-windup .wwc__cta { transform: scale(.96); transition-duration: .16s; }
+.is-spinning .wwc .wwc__tease, .wwc.is-spinning .wwc__tease { animation: none; }
+.is-spinning .wwc__track::after { opacity: 1; }
+.is-spinning .wwc .wwc__arrow, .wwc.is-spinning .wwc__arrow { animation: wwc-chase .6s ease-in-out infinite; }
+.is-spinning .wwc .wwc__arrow:nth-child(2), .wwc.is-spinning .wwc__arrow:nth-child(2) { animation-delay: .1s; }
+.is-spinning .wwc .wwc__arrow:nth-child(1), .wwc.is-spinning .wwc__arrow:nth-child(1) { animation-delay: .2s; }
+.is-won .wwc__glowjp { animation: wwc-pulse .5s var(--wwc-ease-out); }
+.is-won .wwc__wynn { animation: wwc-cheer .52s var(--wwc-ease-spring); }
+
+/* ------------------------------------------------- idle: 3 beats, 9 s apart
+   Beat n: the sheen crosses the jackpot, then ONE chest's lid seam glows
+   (bronze, gold, silver). Removing and re-adding .is-visible re-arms them. */
+.is-visible .wwc__sheen::before { animation: wwc-sheen 9s var(--wwc-ease-out) 1.5s 3; }
+.is-visible .wwc__chest--bronze .wwc__lid { animation: wwc-lid 9s ease-in-out 2.3s 1; }
+.is-visible .wwc__chest--gold .wwc__lid   { animation: wwc-lid 9s ease-in-out 11.3s 1; }
+.is-visible .wwc__chest--silver .wwc__lid { animation: wwc-lid 9s ease-in-out 20.3s 1; }
+/* landing: the gold chest's seam flares (after the idle rules, so it wins) */
+.is-won .wwc__chest--gold .wwc__lid { animation: wwc-seam .9s var(--wwc-ease-out); }
+
+@keyframes wwc-tease { 0%, 100% { transform: rotate(0); } 45% { transform: rotate(-7deg); } }
+@keyframes wwc-intro { 0%, 100% { transform: rotate(0); } 45% { transform: rotate(-7deg); } }
+@keyframes wwc-tick { 0% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
+@keyframes wwc-sheen { 0% { transform: translateX(-110%); } 12%, 100% { transform: translateX(260%); } }
+@keyframes wwc-lid { 0%, 16%, 100% { opacity: 0; transform: scaleX(.7); } 7% { opacity: .85; transform: scaleX(1); } }
+@keyframes wwc-seam { 0%, 100% { opacity: 0; transform: scaleX(.7); } 30% { opacity: 1; transform: scaleX(1.08); } }
+@keyframes wwc-chase { 0%, 100% { opacity: .3; } 40% { opacity: 1; } }
+@keyframes wwc-pulse { 0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(1); } 40% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); } }
+@keyframes wwc-cheer { 0%, 100% { transform: none; } 30% { transform: translateY(2px) scale(1.04, .96); } 65% { transform: translateY(-7px) rotate(3deg); } }
+
+/* ------------------------------------------------- 820 px (768–1023 viewports) */
+@container wwc (max-width: 900px) {
+  .wwc__stage { padding: 0 12px; }
+  .wwc__stage { --mq-w: 176px; --gap-l: 14px; --gap-r: 14px;
+                --wynn-x: 58px; --wynn-w: 104px; --wynn-drop: 16px; --cta-w: 108px; --cta-h: 42px;
+                --chest-gold: 58px; --chest-side: 46px; --chest-overlap: -10px; --key: 17px; }
+  .wwc__cta { font-size: 16px; gap: 6px; }
+  .wwc__turn { width: 14px; height: 14px; }
+  .wwc__pool { width: 220px; }
+  .wwc__plate { width: 100px; height: 25px; left: calc(50% - 50px); top: 7px; }
+  .wwc__jp { width: 140px; height: 60px; left: calc(50% - 70px); top: 34px; }
+  .wwc__glowjp { width: 186px; }
+  .wwc__coin--1 { width: 17px; left: 0; top: 70px; }
+  .wwc__coin--2 { width: 21px; right: 0; top: 50px; }
+  .wwc__coin--3 { width: 14px; left: 8px; top: 12px; }
+  .wwc__loot { gap: 8px; }
+  .wwc__info { gap: 4px; }
+  .wwc__keysline { gap: 5px; }
+  .wwc__sub { font-size: 13px; line-height: 16px; }
+  .wwc__chests { margin-bottom: 8px; }
+}
+
+/* Reduced motion: no movement at all; opacity fades stay
+   (border ring, track light, Spin brighten + glow). */
+@media (prefers-reduced-motion: reduce) {
+  .wwc *, .wwc *::before, .wwc *::after { animation: none !important; }
+  .wwc__sheen, .wwc__lid { display: none; }
+  .wwc .wwc__wynn, .wwc .wwc__cta, .wwc .wwc__turn { transition-property: opacity; }
+  .wwc .wwc__wynn, .wwc .wwc__cta, .wwc .wwc__turn,
+  .wwc:hover .wwc__wynn, .wwc:hover .wwc__cta, .wwc:hover .wwc__turn,
+  .wwc:focus-visible .wwc__wynn, .wwc:focus-visible .wwc__cta, .wwc:focus-visible .wwc__turn,
+  .is-windup .wwc__cta { transform: none; }
+}
