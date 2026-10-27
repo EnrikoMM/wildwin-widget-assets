@@ -2,9 +2,9 @@
    Loaded by the CMS script from the same folder as the images, so image links
    are relative to this file. One DOM for every width: the card (.wwc) is a
    size container; >= 760px wide is the web layout (106px tall), narrower is
-   the phone layout (86px). State classes (.is-visible, .is-intro, .is-windup,
-   .is-spinning, .is-won) sit on an ancestor of the card. */
-/* STEP-70b · Direction H — "Wynn's treasure row", web + phone.
+   the phone layout (86px, "mini pile" of chests). State classes (.is-visible,
+   .is-intro, .is-windup, .is-spinning, .is-won) sit on an ancestor of the card. */
+/* STEP-70b · Final — "Wynn's treasure row" (web) + "Mini pile" (phone).
    Groups: [ wheel ⟵ Spin on one mint track ] [ FORTUNE WHEEL / $50,000 JACKPOT ]
    [ bronze · GOLD · silver + coins, Wynn presenting from the right edge ].
    Groups sit in a grid with one fixed gap, so nothing drifts apart. */
@@ -376,25 +376,32 @@
 }
 
 /* ------------------------------------------------- phone: < 760px card (358)
-   Same story, compact: the Spin pill tucks under the wheel's right half, so
-   the two are one object; jackpot in the middle; gold chest in front with the
-   silver one peeking behind. Wynn and bronze are dropped (and not loaded). */
+   "Mini pile" (owner pick, STEP-70b M1): the Spin pill tucks under the
+   wheel's right half, so the two are one object; the jackpot is the hero in
+   the middle; three tiny chests form one overlapping pile at the right
+   (gold in front, bronze + silver tucked 45% behind its shoulders), one coin.
+   Wynn is dropped (a CSS background, so phones never load him). */
 @container wwc (max-width: 759px) {
   .wwc__body {
     --card-h: 86px; --card-r: 12px;
-    --edge: 8px; --gap: 8px;
-    --wheel: 64px;
-    --unit-w: 128px;            /* wheel 64 + 64 of pill beyond it */
-    --mq-w: 124px;
+    --edge: 6px; --gap: 6px;
+    --wheel: 62px;
+    --unit-w: 120px;            /* wheel 62 + 58 of pill beyond it */
+    --mq-w: 136px;
     --cta-h: 38px; --cta-fs: 15px;
-    --plate-w: 88px;  --plate-top: 6px;
-    --jp-w: 124px;    --jp-top: 28px;
-    --chest-gold: 50px;         /* <= jackpot height (53px) */
-    --chest-side: 40px; --gold-b: 6px; --side-b: 30px;
+    --plate-w: 88px;  --plate-top: 3px;
+    --jp-w: 136px;    --jp-top: 23px;
+    --chest-gold: 36px;         /* small: the jackpot is the hero */
+    --chest-side: 28px; --gold-b: 20px; --side-b: 30px;
     --wynn-w: 0px; --wynn-r: 0px; --paw-gap: 4px;
+    --tuck: .45;
+    --bronze-w: calc(var(--chest-side) * 202 / 180);
+    --silver-w: calc(var(--chest-side) * 217 / 180);
+    --gold-w:   calc(var(--chest-gold) * 206 / 180);
+    --pile-w: calc(var(--bronze-w) * (1 - var(--tuck)) + var(--gold-w) + var(--silver-w) * (1 - var(--tuck)));
   }
   /* .wwc prefix: must outrank `.wwc img { display: block }` */
-  .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn, .wwc .wwc__chest--bronze,
+  .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn,
   .wwc .wwc__coin--1, .wwc .wwc__coin--2, .wwc .wwc__coin--3, .wwc .wwc__coin--5, .wwc .wwc__coin--6 { display: none; }
   .wwc__wing--l { width: 34%; }
   .wwc__pool { width: calc(var(--mq-w) + 24px); }
@@ -408,11 +415,14 @@
   .wwc__turn { width: 12px; height: 12px; }
   .wwc__clover { width: 22px; }
 
-  /* gold in front (left of centre), silver peeking behind, up and right */
-  .wwc__chest--gold   { left: calc(42% - var(--chest-gold) * 103 / 180); }
-  .wwc__chest--silver { right: 0; }
-  .wwc__floor { left: -20%; right: -20%; bottom: -14px; height: 36px; }
-  .wwc__coin--4 { width: 12px; left: calc(14% - 6px); bottom: 3px; }
+  /* the mini pile, right-aligned */
+  .wwc__chests { left: auto; right: 3px; width: var(--pile-w); }
+  .wwc__chest--bronze { left: 0; width: var(--bronze-w); }
+  .wwc__chest--silver { right: 0; width: var(--silver-w); }
+  .wwc__chest--gold   { left: calc(var(--bronze-w) * (1 - var(--tuck))); width: var(--gold-w); }
+  .wwc__chest::before { bottom: -3px; height: 6px; }
+  .wwc__floor { left: -16%; right: -16%; bottom: 6px; height: 30px; }
+  .wwc__coin--4 { width: 11px; left: calc(var(--bronze-w) * (1 - var(--tuck)) - 5px); bottom: calc(var(--gold-b) - 4px); }
   .is-visible .wwc__coin--4 { animation: wwc-hop 9s ease-in-out 11.3s 1; }
 
   /* touch: press feedback instead of hover */
@@ -421,19 +431,21 @@
   .wwc:active .wwc__cta::before { opacity: 1; }
 }
 
-/* ------------------------------------------------- small phone: < 330px (288) */
+/* ------------------------------------------------- small phone: < 330px (288)
+   Gold + silver only (bronze dropped), still overlapping; no turn icon. */
 @container wwc (max-width: 330px) {
   .wwc__body {
-    --edge: 6px; --gap: 6px;
-    --wheel: 60px; --unit-w: 114px;
-    --mq-w: 104px;
-    --plate-w: 84px;  --plate-top: 8px;
-    --jp-w: 102px;    --jp-top: 30px;
-    --chest-gold: 44px; --gold-b: 8px;
-    --paw-gap: 6px;
+    --edge: 6px; --gap: 5px;
+    --wheel: 58px; --unit-w: 110px;
+    --mq-w: 108px;
+    --plate-w: 84px;  --plate-top: 7px;
+    --jp-w: 108px;    --jp-top: 28px;
+    --chest-gold: 30px; --chest-side: 22px; --gold-b: 22px; --side-b: 32px;
+    --tuck: .5;
+    --pile-w: calc(var(--gold-w) + var(--silver-w) * (1 - var(--tuck)));
   }
-  .wwc .wwc__chest--silver, .wwc .wwc__turn { display: none; }
-  .wwc__chest--gold { left: calc(50% - var(--chest-gold) * 103 / 180); }
+  .wwc .wwc__chest--bronze, .wwc .wwc__turn { display: none; }
+  .wwc__chest--gold { left: 0; }
   .wwc__coin--4 { left: -4px; }
 }
 
