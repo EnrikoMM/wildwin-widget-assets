@@ -348,10 +348,10 @@
 @container wwc (min-width: 760px) and (max-width: 960px) {
   .wwc__body {
     --edge-l: 14px; --edge-r: 8px;
-    --wheel: 72px; --cta-w: 140px; --cta-h: 42px; --cta-fs: 16px;
-    --mq-w: 180px; --plate-w: 98px; --plate-top: 4px; --jp-w: 156px; --jp-top: 29px;
-    --bk: .78px; --bay-gap: 5px;
-    --wynn-w: 80px;
+    --wheel: 72px; --cta-w: 128px; --cta-h: 42px; --cta-fs: 16px;
+    --mq-w: 190px; --plate-w: 98px; --plate-top: 4px; --jp-w: 156px; --jp-top: 29px;
+    --bk: .7px; --bay-gap: 5px;
+    --wynn-w: 72px;
   }
   .wwc__cta { gap: 6px; }
   .wwc__turn { width: 14px; height: 14px; }
