@@ -384,13 +384,13 @@
 @container wwc (max-width: 759px) {
   .wwc__body {
     --card-h: 86px; --card-r: 12px;
-    --edge: 6px; --gap: 6px;
+    --edge: 9px; --gap: 5px;     /* same inset on both sides: nothing touches the rounded edge */
     --wheel: 62px;
     --unit-w: 120px;            /* wheel 62 + 58 of pill beyond it */
-    --mq-w: 136px;
+    --mq-w: 132px;
     --cta-h: 38px; --cta-fs: 15px;
     --plate-w: 88px;  --plate-top: 3px;
-    --jp-w: 136px;    --jp-top: 23px;
+    --jp-w: 132px;    --jp-top: 23px;
     --chest-gold: 36px;         /* small: the jackpot is the hero */
     --chest-side: 28px; --gold-b: 20px; --side-b: 30px;
     --wynn-w: 0px; --wynn-r: 0px; --paw-gap: 4px;
@@ -403,6 +403,7 @@
   /* .wwc prefix: must outrank `.wwc img { display: block }` */
   .wwc .wwc__wing--r, .wwc .wwc__track, .wwc .wwc__arrows, .wwc .wwc__wynn,
   .wwc .wwc__coin--1, .wwc .wwc__coin--2, .wwc .wwc__coin--3, .wwc .wwc__coin--5, .wwc .wwc__coin--6 { display: none; }
+  .wwc__stage { padding-right: var(--edge); }
   .wwc__wing--l { width: 34%; }
   .wwc__pool { width: calc(var(--mq-w) + 24px); }
 
@@ -416,7 +417,7 @@
   .wwc__clover { width: 22px; }
 
   /* the mini pile, right-aligned */
-  .wwc__chests { left: auto; right: 3px; width: var(--pile-w); }
+  .wwc__chests { left: auto; right: 0; width: var(--pile-w); }
   .wwc__chest--bronze { left: 0; width: var(--bronze-w); }
   .wwc__chest--silver { right: 0; width: var(--silver-w); }
   .wwc__chest--gold   { left: calc(var(--bronze-w) * (1 - var(--tuck))); width: var(--gold-w); }
@@ -435,12 +436,12 @@
    Gold + silver only (bronze dropped), still overlapping; no turn icon. */
 @container wwc (max-width: 330px) {
   .wwc__body {
-    --edge: 6px; --gap: 5px;
+    --edge: 8px; --gap: 5px;
     --wheel: 58px; --unit-w: 110px;
-    --mq-w: 108px;
+    --mq-w: 104px;
     --plate-w: 84px;  --plate-top: 7px;
-    --jp-w: 108px;    --jp-top: 28px;
-    --chest-gold: 30px; --chest-side: 22px; --gold-b: 22px; --side-b: 32px;
+    --jp-w: 104px;    --jp-top: 28px;
+    --chest-gold: 28px; --chest-side: 20px; --gold-b: 22px; --side-b: 32px;
     --tuck: .5;
     --pile-w: calc(var(--gold-w) + var(--silver-w) * (1 - var(--tuck)));
   }
