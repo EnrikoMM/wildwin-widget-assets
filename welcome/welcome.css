@@ -69,11 +69,11 @@ a, button, summary, details, section, h3, [tabindex] { scroll-margin-top: 88px; 
 .lnk::after { content: ''; position: absolute; left: -4px; right: -4px; top: -14px; bottom: -14px; }
 /* Legal line: each link is its own 44px row item, so wrapped hit areas never stack. */
 .legal { display: flex; flex-wrap: wrap; align-items: center; column-gap: 4px; font-size: 12px; line-height: 16px; color: #CBCCDC; }
-.legal a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px; border-radius: 4px; color: #fff; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(255, 255, 255, .45); white-space: nowrap; }
+.legal a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 2px; border-radius: 4px; color: #fff; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(255, 255, 255, .45); white-space: nowrap; }
 .legal a:hover { text-decoration-color: #fff; }
 /* Each "·" travels with the link after it, so a wrapped line never ends on one. */
 .legal > span[aria-hidden] { display: none; }
-.legal a::before { content: "·"; display: inline-block; margin: 0 6px 0 2px; color: #878BBE; text-decoration: none; }
+.legal a::before { content: ""; flex: none; width: 3px; height: 3px; margin: 0 8px 0 4px; border-radius: 50%; background: #878BBE; }
 .age { display: inline-block; padding: 0 4px; border: 1px solid rgba(203, 204, 220, .55); border-radius: 4px; color: #fff; font-weight: 700; line-height: 16px; }
 
 /* HERO: Wynn presents. City plate, mint rim light, Wynn; the cost + action band below the perforation. */
