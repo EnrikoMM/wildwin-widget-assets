@@ -1,3 +1,4 @@
+/* Display figures use "WW77 Figures" (Roboto 900 subset), registered on the page by welcome.js. */
 /* WildWin Welcome Pack (STEP-77): the complete stylesheet for the page block
    pages/welcome/welcome.js. It renders inside the block's shadow root, so the
    selectors need no prefix. The block inlines a first-screen subset of these
@@ -70,6 +71,9 @@ a, button, summary, details, section, h3, [tabindex] { scroll-margin-top: 88px; 
 .legal { display: flex; flex-wrap: wrap; align-items: center; column-gap: 4px; font-size: 12px; line-height: 16px; color: #CBCCDC; }
 .legal a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px; border-radius: 4px; color: #fff; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(255, 255, 255, .45); white-space: nowrap; }
 .legal a:hover { text-decoration-color: #fff; }
+/* Each "·" travels with the link after it, so a wrapped line never ends on one. */
+.legal > span[aria-hidden] { display: none; }
+.legal a::before { content: "·"; display: inline-block; margin: 0 6px 0 2px; color: #878BBE; text-decoration: none; }
 .age { display: inline-block; padding: 0 4px; border: 1px solid rgba(203, 204, 220, .55); border-radius: 4px; color: #fff; font-weight: 700; line-height: 16px; }
 
 /* HERO: Wynn presents. City plate, mint rim light, Wynn; the cost + action band below the perforation. */
@@ -82,7 +86,7 @@ a, button, summary, details, section, h3, [tabindex] { scroll-margin-top: 88px; 
 .h-copy { position: relative; display: grid; gap: 16px; min-width: 0; }
 /* The h1 is the lockup: one display figure + its line, read as one sentence. */
 .hero h1 { display: grid; gap: 6px; min-width: 0; padding-right: 124px; color: #fff; }
-.h-fig { display: block; font-size: 64px; line-height: .92; font-weight: 900; letter-spacing: -.03em; }
+.h-fig { font-family: "WW77 Figures", Roboto, "Helvetica Neue", Arial, sans-serif; display: block; font-size: 64px; line-height: .92; font-weight: 900; letter-spacing: -.03em; }
 .h-line { display: block; font-size: 24px; line-height: 30px; font-weight: 700; letter-spacing: -.01em; text-wrap: balance; }
 .h-sub { font-size: 16px; line-height: 24px; color: #CBCCDC; max-width: 44ch; }
 .h-sub strong, .cost strong { color: #fff; font-weight: 700; }
@@ -98,7 +102,7 @@ a, button, summary, details, section, h3, [tabindex] { scroll-margin-top: 88px; 
 /* The step number circle: generated (silent to screen readers, the h3 says "1st deposit"). */
 .steps { counter-reset: st; }
 .st-top::before { counter-increment: st; content: counter(st); content: counter(st) / ""; display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid #4A4E85; font-size: 14px; line-height: 1; font-weight: 700; color: #fff; }
-.st-fig { font-size: 40px; line-height: 1; font-weight: 900; letter-spacing: -.03em; }
+.st-fig { font-family: "WW77 Figures", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 40px; line-height: 1; font-weight: 900; letter-spacing: -.03em; }
 .st-up { margin-top: 4px; font-size: 16px; line-height: 24px; color: #CBCCDC; }
 .st-up strong, .st-how strong, .st-w strong { color: #fff; font-weight: 700; }
 .st-fsw, .st-n { font-size: 14px; line-height: 20px; color: #CBCCDC; }
@@ -158,7 +162,7 @@ a, button, summary, details, section, h3, [tabindex] { scroll-margin-top: 88px; 
 /* TERMS: the cost figure on the leading piece, the rows + the open slot on the engraved piece */
 .terms .tk-a { padding: 22px 20px; display: grid; gap: 10px; align-content: start; }
 .terms .tk-b { padding: 6px 10px 14px; }
-.tm-fig { font-size: 56px; line-height: 1; font-weight: 900; letter-spacing: -.03em; }
+.tm-fig { font-family: "WW77 Figures", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 56px; line-height: 1; font-weight: 900; letter-spacing: -.03em; }
 .tm-cap { font-size: 16px; line-height: 24px; color: #CBCCDC; max-width: 26ch; }
 .tm-cap strong { color: #fff; font-weight: 700; }
 .tm-cur { font-size: 14px; line-height: 22px; }
