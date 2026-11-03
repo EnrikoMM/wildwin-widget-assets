@@ -1,0 +1,142 @@
+/* WildWin Welcome Pack (STEP-81, "W2 · One-screen Pack"): the hosted
+   stylesheet for the page block pages/welcome81-w2/welcome81-w2.js. It
+   renders inside the block's shadow root under the root class .ww81b, so the
+   selectors need no prefix. The block inlines the panel, the header and the
+   tabs; this file adds the tab contents, the states and the motion. It is
+   linked after the inline style, so at equal specificity these rules win.
+   Served pinned (commit + SRI) from EnrikoMM/wildwin-widget-assets/welcome81-w2/. */
+
+.ww81b { --ease: cubic-bezier(.16, 1, .3, 1); -webkit-font-smoothing: antialiased; text-align: left; }
+::selection { background: #02F09840; color: #fff; }
+:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 6px; }
+img { display: block; }
+
+/* Owner placeholders: visibly marked, never guessed */
+.ph { display: inline-block; max-width: 100%; padding: 0 6px; border: 1px dashed var(--t3); border-radius: 4px; background: repeating-linear-gradient(135deg, #878BBE29 0 5px, transparent 5px 10px); color: var(--t2); font-style: italic; font-size: 14px; line-height: 20px; }
+
+/* Stage glow behind Wynn */
+.rim { display: block; position: absolute; top: -14cqi; right: -22cqi; width: 90cqi; aspect-ratio: 1; background: radial-gradient(closest-side, #02F09833, #02F09800); }
+
+/* Legal line and the show-everything toggle */
+.legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; font-size: 12px; line-height: 16px; color: var(--t2); }
+.legal a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 3px; }
+.age { padding: 1px 5px; border: 1px solid var(--t3); border-radius: 4px; font-weight: 700; color: #fff; }
+
+/* Controls: hover, press, focus */
+.all-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; white-space: nowrap; border: 1px solid #3A3D6B; border-radius: 10px; background: none; color: #fff; font: 500 14px/18px Roboto, Arial, sans-serif; cursor: pointer; }
+.tabs .all-btn { display: none; }
+.cta { box-shadow: 0 10px 24px -12px #02F0988C; transition: transform 160ms var(--ease), filter 160ms var(--ease); }
+.cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.cta:active { transform: scale(.98); }
+.cta .ic { transition: transform 160ms var(--ease); }
+.cta:hover .ic { transform: translateX(2px); }
+.cta:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; box-shadow: inset 0 0 0 3px var(--bg); }
+.jump { font-weight: 700; font-size: 15px; text-decoration: none; }
+.jump .ic { transition: transform 160ms var(--ease); }
+.jump:hover .ic { transform: translateY(2px); }
+.tab { transition: color 160ms var(--ease), background-color 160ms var(--ease); }
+.tab:hover { color: #fff; }
+.tab:focus-visible { outline-offset: -2px; }
+.all-btn { transition: border-color 160ms var(--ease); }
+.all-btn:hover { border-color: var(--t3); }
+.legal a:hover { color: #fff; }
+
+/* Panels: the selected one comes in from just below (transform only) */
+.tp { display: grid; gap: 20px; align-content: start; }
+.tp:focus-visible { outline-offset: 6px; }
+.tp { animation: ww81b-in 280ms var(--ease); } /* replays each time a tab shows */
+@keyframes ww81b-in { from { transform: translateY(8px); } }
+
+/* Offer: the two deposits, then the fact rows */
+.path { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.stop { display: grid; gap: 4px; align-content: start; padding: 14px; border-radius: 14px; background: var(--well); border: 1px solid var(--line2); }
+.stop.next { background: none; border-style: dashed; border-color: #45487C; }
+.stop .n { font-size: 13px; line-height: 18px; font-weight: 700; color: var(--t2); }
+.stop .big { font-size: clamp(17px, 5.2cqi, 22px); line-height: 1.15; font-weight: 900; letter-spacing: -.01em; }
+.stop .fsx { font-size: 14px; line-height: 20px; color: var(--t2); }
+.tag { display: inline-flex; align-items: flex-start; gap: 6px; margin-top: 6px; font-size: 13px; line-height: 18px; color: var(--t2); }
+.tag .ic { width: 14px; height: 14px; margin-top: 2px; }
+.facts { display: grid; }
+.row { display: grid; gap: 2px; padding: 12px 0; border-top: 1px solid var(--line); }
+.row dt { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--t3); }
+.row .v { font-size: 16px; line-height: 22px; font-weight: 700; }
+.row .d { font-size: 14px; line-height: 20px; color: var(--t2); }
+
+/* How to claim: numbered steps (the order is the information) */
+.steps { display: grid; counter-reset: s; }
+.step { display: grid; align-content: start; grid-template-columns: 32px minmax(0, 1fr); gap: 2px 14px; padding: 12px 0; border-top: 1px solid var(--line); counter-increment: s; }
+.step::before { content: counter(s); grid-row: span 2; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #45487C; font-size: 14px; font-weight: 700; }
+.step .t { padding-top: 5px; font-weight: 700; line-height: 22px; }
+.step .d { font-size: 14px; line-height: 20px; color: var(--t2); }
+.step.hot { margin: 4px -12px; padding: 12px; border: 1px solid #3A3D6B; border-radius: 14px; background: var(--line); }
+.step.hot::before { background: var(--mint); border-color: var(--mint); color: var(--bg); }
+.step.hot + .step { border-top: 0; }
+.next2 { padding: 14px 16px; border-radius: 14px; border: 1px dashed #45487C; font-size: 15px; line-height: 22px; color: var(--t2); }
+.slot { font-size: 14px; }
+
+/* Terms */
+.terms { display: grid; column-gap: 32px; }
+.terms li { display: grid; gap: 2px; align-content: start; padding: 11px 0; border-top: 1px solid var(--line); }
+.terms .tl { font-weight: 700; line-height: 22px; }
+.terms .td { font-size: 14px; line-height: 20px; color: var(--t2); }
+.tc { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 44px; font-weight: 700; font-size: 15px; text-decoration: underline 2px #02F09899; text-underline-offset: 5px; }
+.tc .ic { color: var(--mint); }
+
+/* FAQ: three groups of answers that open in place */
+.faq { display: grid; gap: 20px; }
+.grp h3 { padding-bottom: 6px; font-size: 13px; line-height: 18px; font-weight: 700; color: var(--t3); }
+.grp details { border-top: 1px solid var(--line); }
+.grp summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 8px 4px 8px 0; cursor: pointer; list-style: none; font-weight: 700; font-size: 15px; line-height: 20px; }
+.grp summary::-webkit-details-marker { display: none; }
+@media (hover: hover) { .grp summary:hover { color: var(--mint); } }
+.pm { position: relative; flex: none; width: 14px; height: 14px; }
+.pm::before, .pm::after { content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; border-radius: 1px; background: var(--t2); transition: transform 220ms var(--ease); }
+.pm::after { transform: rotate(90deg); }
+details[open] .pm::after { transform: rotate(0deg); }
+.ans { padding: 0 24px 16px 0; font-size: 14px; line-height: 21px; color: var(--t2); max-width: 68ch; }
+.ans strong { font-weight: 500; }
+
+/* Show everything: the panels stacked, each with its heading */
+.all .tp > h2 { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; font-size: 24px; line-height: 30px; font-weight: 700; letter-spacing: -.01em; }
+.all .body { display: grid; gap: 32px; }
+.all .tp + .tp { padding-top: 28px; border-top: 1px solid var(--line); }
+
+/* Wynn ignores the pointer, the stage art arrives softly */
+.wynn { animation: ww81b-slide 900ms var(--ease) both; }
+@keyframes ww81b-slide { from { transform: translateX(5%); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* MID TIER 600-959 */
+@container ww81b (min-width: 600px) {
+  .shade { background: linear-gradient(90deg, #070B22EB, #070B22B3 55%, #070B2233), linear-gradient(#0000 60%, #171831); }
+  .rim { top: -20cqi; right: -12cqi; width: 60cqi; }
+  .path { gap: 12px; }
+  .terms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+}
+
+/* WEB 960+: the selected panel scrolls inside the one-screen pack */
+@container ww81b (min-width: 960px) {
+  .city { object-position: 22% 50%; opacity: .62; }
+  .rim { top: auto; bottom: 60px; left: -60px; right: auto; width: 420px; }
+  .tabs .all-btn { display: inline-flex; }
+  .all .wynn { bottom: auto; top: 240px; }
+  .shade { background: linear-gradient(#070B2200 35%, #070B22B3 70%, #070B22), linear-gradient(90deg, #0000 70%, #171831B3); }
+  .tp { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding-right: 10px; margin-right: -10px; scrollbar-width: thin; scrollbar-color: #34365F transparent; }
+  .tp { padding-bottom: 36px; -webkit-mask-image: linear-gradient(#000 calc(100% - 44px), #0000); mask-image: linear-gradient(#000 calc(100% - 44px), #0000); } /* the fade says "scroll for more" */
+  .all .tp { height: auto; overflow: visible; padding-bottom: 0; -webkit-mask-image: none; mask-image: none; }
+  .gift { display: block; position: absolute; top: 64px; left: 64px; width: 172px; height: 172px; filter: drop-shadow(0 18px 24px #03081CB3); animation: ww81b-slide 900ms var(--ease) both; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+  .step.hot { margin: 4px 0; }
+  .step.hot + .step { border-top: 1px solid var(--line); }
+  .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; align-items: start; }
+  .grp:last-child { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+/* Forced colours: keep the borders and the selected tab visible */
+@media (forced-colors: active) {
+  .pnl, .stop, .step.hot { border: 1px solid CanvasText; }
+  .tab[aria-selected=true] { background: Highlight; color: HighlightText; }
+}

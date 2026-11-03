@@ -1,0 +1,198 @@
+/* WildWin Welcome Pack (STEP-81, option W3 "Claim Path"): the hosted
+   stylesheet for the page block pages/welcome81-w3/welcome81-w3.js. It renders
+   inside the block's shadow root under the root class .ww81c, so the
+   selectors need no prefix. The block inlines the first screen (root, hero,
+   CTA); this file adds the rail, the stops, the 2nd deposit, the rules and the
+   close. It is linked after the inline style, so at equal specificity these
+   rules win. Served pinned (commit + SRI) from
+   EnrikoMM/wildwin-widget-assets/welcome81-w3/. Display figures use
+   "WW81C Figures" (Roboto 900 subset), registered on the page by the block. */
+
+/* Root tokens and base */
+.ww81c {
+  --bg: #03081C; --deep: #0C1129; --card: #171831; --line: #202241; --rail: #2E3262;
+  --tx: #FFFFFF; --tx2: #CBCCDC; --tx3: #878BBE; --mint: #02F098;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+}
+::selection { background: #02F09840; color: #fff; }
+:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 8px; }
+[id] { scroll-margin-top: 88px; }
+img { display: block; }
+
+/* Owner placeholders: visibly marked, never guessed */
+.ph { display: inline-block; max-width: 100%; padding: 0 6px; border: 1px dashed var(--tx3); border-radius: 4px; background: repeating-linear-gradient(135deg, #878BBE29 0 5px, transparent 5px 10px); color: var(--tx2); font-style: italic; font-size: 14px; line-height: 20px; }
+
+/* Actions */
+.cta { transition: transform 140ms var(--ease), filter 140ms var(--ease), background-color 140ms var(--ease); }
+.cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.cta:active { transform: scale(.98); }
+.cta:focus-visible { outline: 3px solid var(--bg); outline-offset: -6px; }
+.cta.ghost { background: transparent; color: var(--tx); box-shadow: inset 0 0 0 2px var(--mint); }
+.cta.ghost:hover { filter: none; background: #02F0981A; }
+.cta.ghost:focus-visible { outline-color: var(--mint); outline-offset: 2px; }
+.go:hover { text-decoration-color: var(--mint); }
+.h-wynn { pointer-events: none; }
+.h-acts .cta { justify-self: stretch; }
+
+/* The rail geometry, per tier: rail column, line x, node size, Wynn's
+   centre from the right edge (where the path starts). */
+.path { --rw: 44px; --rx: 15px; --nd: 30px; --wc: 17cqi; display: block; position: relative; }
+
+/* The path intro: the line leaves Wynn and turns down into the rail */
+.p-in { position: relative; padding: 32px 0 30px var(--rw); }
+.conn { position: absolute; top: 0; bottom: 0; left: calc(var(--rx) - 1px); right: var(--wc); border: 2px solid var(--rail); border-width: 2px 0 0 2px; border-top-left-radius: 22px; }
+.conn::after { content: ''; position: absolute; top: -7px; right: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px var(--bg); }
+.p-in h2 { font-size: 24px; line-height: 30px; font-weight: 700; letter-spacing: -.01em; }
+.p-in p { margin-top: 6px; color: var(--tx2); }
+
+/* The stops: number on the rail, the body beside it */
+.rw { position: relative; }
+.stops { display: block; margin: 0; }
+.stop, .again { position: relative; display: grid; grid-template-columns: var(--rw) minmax(0, 1fr); padding-bottom: 44px; }
+.stop::before, .again::before { content: ''; position: absolute; left: calc(var(--rx) - 1px); top: 0; bottom: 0; width: 2px; background: var(--rail); }
+.again::before { bottom: auto; height: calc(var(--nd) / 2); }
+.again { padding-bottom: 0; gap: 0; }
+.node { position: relative; z-index: 1; display: grid; place-items: center; width: var(--nd); height: var(--nd); margin-left: calc(var(--rx) - var(--nd) / 2); border: 2px solid var(--rail); border-radius: 50%; background: var(--bg); font-size: 14px; line-height: 1; transition: border-color 500ms var(--ease), color 500ms var(--ease), box-shadow 500ms var(--ease); }
+.node.on { border-color: var(--mint); color: var(--tx); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px #02F09833; }
+.node .ic { width: 14px; height: 14px; color: var(--tx2); }
+.n2 { border-style: dashed; }
+.sb { gap: 20px; min-width: 0; align-content: start; }
+.sm { gap: 12px; min-width: 0; align-content: start; }
+.st-t { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: var(--nd); font-size: 24px; line-height: 30px; font-weight: 700; letter-spacing: -.01em; }
+.st-p { max-width: 60ch; color: var(--tx2); }
+.st-p strong { font-weight: 500; }
+.facts { display: grid; gap: 8px; color: var(--tx2); }
+.facts li { position: relative; padding-left: 18px; max-width: 60ch; }
+.facts li::before { content: ''; position: absolute; left: 2px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--tx3); }
+.sa { display: grid; justify-items: start; }
+
+/* Step 2: what the 1st deposit gets (the page's one raised surface) */
+.offer { position: relative; display: grid; gap: 2px; padding: 20px 20px 18px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(#1B1C3A, var(--card)); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .7); }
+.o-art { display: block; position: absolute; top: -26px; right: -4px; width: 76px; height: 76px; pointer-events: none; }
+.o-k { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--tx2); }
+.o-fig { font-family: 'WW81C Figures', Roboto, Arial, sans-serif; font-weight: 900; font-size: 56px; line-height: 60px; letter-spacing: -.03em; }
+.o-up { font-size: 18px; line-height: 24px; font-weight: 700; }
+.o-fs { margin-top: 12px; padding-top: 12px; border-top: 1px solid #2E3160; color: var(--tx2); }
+.o-fs strong { display: block; font-size: 18px; line-height: 24px; }
+.o-x { margin-top: 10px; font-size: 14px; line-height: 20px; color: var(--tx2); }
+
+/* Step 3: the step most people miss */
+.flag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 8px; border-radius: 999px; background: var(--tx); color: var(--bg); font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0; }
+.flag .ic { width: 14px; height: 14px; }
+.s3 .sb { margin: -12px 0 0 -6px; padding: 12px 14px 18px; border: 1px solid var(--rail); border-radius: 16px; background: var(--deep); }
+.seq { display: grid; gap: 8px; }
+.seq li { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid var(--rail); border-radius: 12px; font-weight: 500; color: var(--tx2); }
+.seq .ic { width: 18px; height: 18px; color: var(--tx3); }
+.seq li:last-child { border-color: var(--mint); color: var(--tx); font-weight: 700; }
+.seq li:last-child .ic { color: var(--mint); }
+
+/* Step 4: the wager, worked once */
+.ex { display: grid; gap: 4px; padding-top: 16px; border-top: 1px solid var(--line); }
+.ex-k { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--tx2); }
+.ex-r { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--rail); color: var(--tx2); }
+.ex-r strong { font-family: 'WW81C Figures', Roboto, Arial, sans-serif; font-weight: 900; font-size: 24px; line-height: 28px; }
+.ex-r:nth-child(3) strong { font-size: 32px; line-height: 36px; }
+.ex-n { margin-top: 4px; font-size: 14px; line-height: 20px; color: var(--tx2); }
+
+/* The 2nd deposit: the same path, once more */
+.ag { display: grid; gap: 6px; padding: 16px 18px 18px; margin-top: -4px; border: 1px dashed var(--rail); border-radius: 16px; }
+.ag h3 { font-size: 18px; line-height: 24px; font-weight: 700; text-wrap: balance; }
+.ag p { color: var(--tx2); }
+.ag p strong { font-weight: 500; }
+.ag-n { font-size: 14px; line-height: 20px; }
+
+/* See every rule */
+.rules { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.rules > summary { display: flex; align-items: center; gap: 16px; min-height: 72px; padding: 12px 0; cursor: pointer; list-style: none; }
+.rules > summary::-webkit-details-marker { display: none; }
+.rules > summary h2 { font-size: 22px; line-height: 28px; font-weight: 700; }
+.rules > summary p { font-size: 14px; line-height: 20px; color: var(--tx2); }
+.pm { margin-left: auto; display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1px solid #2E3160; color: var(--mint); }
+.pm .ic { transition: transform 180ms var(--ease); }
+.rules[open] .pm .ic { transform: rotate(45deg); }
+.rules > summary:hover .pm { border-color: var(--mint); }
+.r-body { display: grid; gap: 28px; padding: 4px 0 28px; }
+.r-body h3 { font-size: 16px; line-height: 24px; font-weight: 700; margin-bottom: 6px; }
+.terms { display: grid; column-gap: 32px; }
+.terms li { display: grid; gap: 2px; align-content: start; padding: 12px 0; border-top: 1px solid var(--line); }
+.terms .tl { font-weight: 700; }
+.terms .td { font-size: 14px; line-height: 20px; color: var(--tx2); }
+.tc { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 4px; font-weight: 500; text-decoration: underline 2px #02F09899; text-underline-offset: 5px; }
+.tc .ic { color: var(--mint); }
+.faq { display: grid; gap: 24px; }
+.qa { padding: 12px 0; border-top: 1px solid var(--line); }
+.qa dt { font-weight: 700; }
+.qa dd { margin-top: 4px; font-size: 14px; line-height: 20px; color: var(--tx2); max-width: 68ch; }
+.qa dd strong { font-weight: 500; }
+
+/* Close */
+.close { position: relative; gap: 14px; padding: 24px 20px 12px; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(#1B1C3A, var(--card)); overflow: hidden; }
+.cl-art { display: block; position: absolute; top: 14px; right: 14px; width: 64px; height: 64px; pointer-events: none; }
+.close h2 { font-size: 30px; line-height: 34px; font-weight: 900; letter-spacing: -.02em; padding-right: 72px; }
+.cl-t p { margin-top: 6px; color: var(--tx2); padding-right: 64px; }
+.cl-act { display: grid; gap: 4px; }
+.legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; font-size: 12px; line-height: 16px; color: var(--tx2); }
+.legal a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 3px; }
+.legal a:hover { color: var(--tx); }
+.legal .age { font-weight: 700; color: var(--tx); }
+
+/* Entrance: transform only, the content is visible from the first frame */
+.h-fig { animation: ww81c-rise 700ms var(--ease) both; }
+.h-wynn { animation: ww81c-step 900ms var(--ease) both; }
+@keyframes ww81c-rise { from { transform: translateY(.12em); } }
+@keyframes ww81c-step { from { transform: translateY(4%); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* MID TIER 600-959 */
+@container ww81c (min-width: 600px) {
+  .path { --rw: 84px; --rx: 36px; --nd: 44px; --wc: 16cqi; }
+  .h-acts .cta { justify-self: auto; }
+  .p-in { padding: 64px 0 40px var(--rw); }
+  .p-in h2 { font-size: 30px; line-height: 36px; }
+  .node { font-size: 16px; }
+  .node .ic { width: 18px; height: 18px; }
+  .stop { padding-bottom: 60px; }
+  .st-t { font-size: 28px; line-height: 34px; }
+  .seq { grid-template-columns: 1fr 1fr 1.3fr; }
+  .s3 .sb { margin: -16px 0 0 -10px; padding: 16px 22px 22px; }
+  .terms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .close { grid-template-columns: 96px minmax(0, 1fr) auto; column-gap: 24px; align-items: center; padding: 24px 28px; }
+  .cl-art { position: static; width: 96px; height: 96px; }
+  .close h2, .cl-t p { padding-right: 0; }
+  .cl-act { justify-items: start; }
+}
+
+/* WEB 960+ */
+@container ww81c (min-width: 960px) {
+  .path { --rw: 112px; --rx: 48px; --nd: 48px; --wc: 212px; }
+  .p-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: end; padding: 72px 0 48px var(--rw); }
+  .p-in h2 { font-size: 34px; line-height: 40px; }
+  .p-in p { margin: 0; }
+  .node { font-size: 18px; }
+  .stop { padding-bottom: 80px; }
+  .st-t { font-size: 34px; line-height: 40px; }
+  .sb.two { display: grid; grid-template-columns: minmax(0, 1fr) 400px; column-gap: 56px; align-items: start; }
+  .s1 .sb.two { grid-template-columns: minmax(0, 1fr); }
+  .o-fig { font-size: 64px; line-height: 68px; }
+  .o-art { width: 92px; height: 92px; top: -36px; right: 4px; }
+  .ex { padding: 4px 0 4px 32px; border-top: 0; border-left: 1px solid var(--line); }
+  .s3 .sb { margin: -16px 0 0 -14px; padding: 16px 28px 26px; }
+  .ag { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; padding: 20px 28px; }
+  .ag h3 { grid-column: 1 / -1; font-size: 22px; line-height: 28px; }
+  .rules > summary { min-height: 60px; padding: 8px 0; }
+  .terms { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .faq { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; align-items: start; }
+  .close { grid-template-columns: 96px minmax(0, 1fr) auto; padding: 24px 40px; }
+  .close h2 { font-size: 36px; line-height: 40px; }
+}
+
+/* Forced colours: keep the rail, nodes and borders visible */
+@media (forced-colors: active) {
+  .node, .offer, .ag, .close, .seq li, .s3 .sb { border-color: CanvasText; }
+  .stop::before, .again::before { background: CanvasText; }
+  .node.on { border-color: Highlight; }
+}
