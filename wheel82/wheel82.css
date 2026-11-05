@@ -97,7 +97,7 @@
 .legal{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;font-size:13px;color:var(--t3)}
 .legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--t2)}
 .close .legal{margin-top:12px}
-.foot{justify-content:center;padding:28px 16px 32px}
+.jp-h{display:grid;gap:8px} .jp-h .big{display:block}
 .age{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--t3);color:var(--t2);font-weight:700;font-size:12px}
 .cash .big{font-size:34px}
 .jp .big{font-size:64px;margin-top:4px}
@@ -161,3 +161,5 @@
 .jp,.close{margin-left:32px;margin-right:32px}
 .close{padding:36px 40px}
 }
+summary,.h2[tabindex]{scroll-margin:88px 0 96px}
+@media (forced-colors:active){:focus-visible,.btn:focus-visible{outline:2px solid CanvasText!important;outline-offset:2px}input[type=range]{forced-color-adjust:auto}}
